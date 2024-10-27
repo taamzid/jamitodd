@@ -4,7 +4,7 @@ import globe from "../../assets/artist/globe.svg";
 import searchIcon from "../../assets/artist/searchIcon.svg";
 import axios from "axios";
 
-const ArtistPrev = () => {
+const ArtistUpdated = () => {
   const [view, setView] = useState("globeView");
   const [artistName, setArtistName] = useState("");
   const [addedArtist, setAddedArtist] = useState(null);
@@ -180,6 +180,7 @@ const ArtistPrev = () => {
         // Reset inputs
         setNewDate("");
         setSelectedLocation(null);
+        setView("globeView");
       } catch (error) {
         console.error("Error adding date or location:", error);
       }
@@ -437,4 +438,4 @@ const ArtistPrev = () => {
   );
 };
 
-export default ArtistPrev;
+export default ArtistUpdated;

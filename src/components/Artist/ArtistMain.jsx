@@ -1,10 +1,11 @@
 import React from "react";
-import ArtistPrev from "./ArtistPrev";
+import ArtistUpdated from "./ArtistUpdated";
+// import ArtistPrev from "./ArtistPrev";
 
 const ArtistMain = () => {
   return (
     <div>
-      <ArtistPrev />
+      <ArtistUpdated />
     </div>
   );
 };

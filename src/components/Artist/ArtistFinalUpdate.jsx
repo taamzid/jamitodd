@@ -4,7 +4,7 @@ import globe from "../../assets/artist/globe.svg";
 import searchIcon from "../../assets/artist/searchIcon.svg";
 import axios from "axios";
 
-const ArtistUpdated = () => {
+const ArtistFinalUpdate = () => {
   const [view, setView] = useState("globeView");
   const [artistName, setArtistName] = useState("");
   const [addedArtist, setAddedArtist] = useState(null);
@@ -357,13 +357,50 @@ const ArtistUpdated = () => {
                       Dates for {selectedLocation.split(",")[0]}.
                     </h2>
                     <div className="overflow-y-auto h-[600px] w-[350px] mt-[2px] hide-scrollbar">
-                      {datesForSelectedLocation &&
-                      datesForSelectedLocation.length > 0 ? (
-                        datesForSelectedLocation
+                      {(() => {
+                        if (!artistData?.locations || !artistData?.dates) {
+                          return (
+                            <h1 className="text-white text-center">
+                              No data available.
+                            </h1>
+                          );
+                        }
+                        // Pair each location with its corresponding date
+                        const locationDatePairs = artistData?.locations.map(
+                          (loc, idx) => ({
+                            location: loc,
+                            date: artistData.dates[idx],
+                          })
+                        );
+
+                        // Filter pairs for the selected location and remove "fake" dates
+                        const filteredDates = locationDatePairs
                           .filter(
-                            (date, index) => date.toLowerCase() !== "fake"
+                            (pair) =>
+                              pair.location === selectedLocation &&
+                              pair.date.toLowerCase() !== "fake"
                           )
-                          .map((date, index) => (
+                          .map((pair) => pair.date);
+
+                        // Check if all dates for this location were "fake"
+                        const allDatesAreFake =
+                          filteredDates.length === 0 &&
+                          locationDatePairs
+                            .filter(
+                              (pair) => pair.location === selectedLocation
+                            )
+                            .every(
+                              (pair) => pair.date.toLowerCase() === "fake"
+                            );
+
+                        return allDatesAreFake ? (
+                          <div>
+                            <h1 className="text-white text-center">
+                              No dates available for this location!!
+                            </h1>
+                          </div>
+                        ) : (
+                          filteredDates.map((date, index) => (
                             <div
                               key={index}
                               className="bg-bg-artist-btn rounded-md p-[10px] w-full mt-[2vh]"
@@ -371,15 +408,8 @@ const ArtistUpdated = () => {
                               <h1 className="text-white">{date}</h1>
                             </div>
                           ))
-                      ) : (
-                        <div>
-                          <div>
-                            <h1 className="text-white text-center">
-                              No dates available for this location!!
-                            </h1>
-                          </div>
-                        </div>
-                      )}
+                        );
+                      })()}
                     </div>
                   </div>
                 )}
@@ -423,4 +453,4 @@ const ArtistUpdated = () => {
   );
 };
 
-export default ArtistUpdated;
+export default ArtistFinalUpdate;

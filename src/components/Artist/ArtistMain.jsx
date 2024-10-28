@@ -1,11 +1,9 @@
-import React from "react";
-import ArtistUpdated from "./ArtistUpdated";
-// import ArtistPrev from "./ArtistPrev";
+import ArtistFinalUpdate from "./ArtistFinalUpdate";
 
 const ArtistMain = () => {
   return (
     <div>
-      <ArtistUpdated />
+      <ArtistFinalUpdate />
     </div>
   );
 };
